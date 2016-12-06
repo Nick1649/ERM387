@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory UI</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">-->
+	<!--<link rel="stylesheet" href="assets/bootstrap-table/css/bootstrap-table.min.css">-->
+    <!--<link rel="stylesheet" href="assets/fonts/ionicons.min.css">-->
+    <!--<link rel="stylesheet" href="assets/css/custom-search-input.css">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+    	<script src="assets/js/inventory.js"></script>
+    <!--<script src="assets/js/jquery.min.js"></script>-->
+    <!--<script src="assets/bootstrap/js/bootstrap.min.js"></script>-->
+	<!--<script src="assets/bootstrap-table/js/bootstrap-table.min.js"></script>-->
+
+    <style>
+        .section {
+            padding-bottom: 15px;
+        };
+
+        .inline {
+            display: inline-block;
+        };
+
+        .form-group {
+            padding-bottom: 15px;
+        }
+
+        #resource-name, #resource-type {
+            font-weight: bold;
+        }
+
+        #items {
+            margin-bottom: 0px;
+            margin-top: 25px;
+        }
+        
+        #createStatus {
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Inventory</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <!--<ul class="nav navbar-nav"></ul><a class="navbar-right navbar-link" href="#">Link</a>-->
+                <ul class="nav navbar-nav">
+                    <li role="presentation"><a href="Profile.html">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section id="title" class="section" style="margin-bottom: 30px;">
+            <div class="row">
+                <div class="inline">
+                    <div class="col-xs-12">
+                        <div class="pull-left">
+                            <h1>Resources</h1>
+                        </div>
+                        <div class="btn-group pull-right" role="group" style="margin-top: 25px; margin-bottom: 5px;">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal" id="createResource">Create Resource</button>
+                            <div id="quickEditStatus" class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Change Status <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" id="quickAvailable">Available</a></li>
+                                    <li><a href="#" id="quickUnavailable">Unavailable</a></li>
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-danger" id="deleteResources">Delete Resource(s)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="data-table" class="section">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="table" class="stripe cell-border" width="100%"></table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section id="create-modal" class="section">
+        <!-- Modal -->
+        <div class="modal fade" id="createModal" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Create Resource</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="createAlert" class="modal-alert alert alert-danger alert-dismissible hidden" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Error!</strong> Please fill in the input(s) in red!
+                        </div>
+                        <form id="createForm">
+                            <div class="form-group">
+                                <label class="control-label" for="createType">Type:</label>
+                                <select id="createType" class="form-control"></select>
+                            </div>
+                            <div id="newStatusGroup" class="form-group">
+                                <label class="control-label">Availability:</label>
+                                <select class="form-control" id="newStatus">
+                                    <option value="true">Available</option>
+                                    <option value="false">Unavailable</option>
+                                </select>
+                            </div>
+							<div id="createRoomTypeGroup" class="form-group">
+                                <label for="createRoomType" class="control-label">Room Type:</label>
+                                <select id="createRoomType" class="form-control">
+									<option value="conference">Conference</option>
+                                    <option value="meeting">Meeting</option>
+								</select>
+                            </div>
+							<div id="createRoomNumberGroup" class="form-group">
+                                <label for="createRoomNumber" class="control-label">Room Number:</label>
+                                <input type="text" class="form-control" id="createRoomNumber">
+                            </div>
+							<div id="createCapacityGroup" class="form-group">
+                                <label for="createCapacity" class="control-label">Capacity:</label>
+                                <input type="number" class="form-control" id="createCapacity">
+                            </div>
+							<div id="createHeightGroup" class="form-group">
+                                <label for="createHeight" class="control-label">Height:</label>
+                                <input type="number" class="form-control" id="createHeight">
+                            </div>
+							<div id="createWidthGroup" class="form-group">
+                                <label for="createWidth" class="control-label">Width:</label>
+                                <input type="number" class="form-control" id="createWidth">
+                            </div>
+							<div id="createLengthGroup" class="form-group">
+                                <label for="createLength" class="control-label">Length:</label>
+                                <input type="number" class="form-control" id="createLength">
+                            </div>
+							<div id="createPrintableGroup" class="form-group">
+                                <label for="createPrintableType" class="control-label">Printable:</label>
+                                <select id="createPrintableType" class="form-control">
+									<option value="true">True</option>
+                                    <option value="false">False</option>
+								</select>
+                            </div>
+							<div id="createRamGroup" class="form-group">
+                                <label for="createRam" class="control-label">RAM:</label>
+                                <input type="number" class="form-control" id="createRam">
+                            </div>
+							<div id="createStorageGroup" class="form-group">
+                                <label for="createStorage" class="control-label">Storage:</label>
+                                <input type="number" class="form-control" id="createStorage">
+                            </div>
+							<div id="createOperatingSystemGroup" class="form-group">
+                                <label for="createOperatingSystem" class="control-label">Operating System:</label>
+                                <input type="text" class="form-control" id="createOperatingSystem">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="createRecord" type="button" class="btn btn-success">Create Resource</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="view-modal" class="section">
+        <!-- Modal -->
+        <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">View Resource</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="viewID" class="control-label">ID:</label>
+                                <input type="text" class="form-control" id="viewID" disabled>
+                            </div>
+                            <div id="viewTypeGroup" class="form-group">
+                                <label for="viewType" class="control-label">Type:</label>
+                                <select id="viewType" class="form-control" disabled></select>
+                            </div>
+                            <div id="viewAvailabilityGroup" class="form-group">
+                                <label for="viewAvailability" class="control-label">Availability:</label>
+                                <select class="form-control" id="viewAvailability" disabled>
+                                    <option value="true">Available</option>
+                                    <option value="false">Unavailable</option>
+                                </select>
+                            </div>
+							<div id="viewRoomTypeGroup" class="form-group">
+                                <label for="viewRoomType" class="control-label">Room Type:</label>
+                                <select id="viewRoomType" class="form-control" disabled>
+									<option value="conference">Conference</option>
+                                    <option value="meeting">Meeting</option>
+								</select>
+                            </div>
+							<div id="viewRoomNumberGroup" class="form-group">
+                                <label for="editRoomNumber" class="control-label">Room Number:</label>
+                                <input type="text" class="form-control" id="viewRoomNumber" disabled>
+                            </div>
+							<div id="viewCapacityGroup" class="form-group">
+                                <label for="viewCapacity" class="control-label">Capacity:</label>
+                                <input type="number" class="form-control" id="viewCapacity" disabled>
+                            </div>
+							<div id="viewHeightGroup" class="form-group">
+                                <label for="viewHeight" class="control-label">Height:</label>
+                                <input type="number" class="form-control" id="viewHeight" disabled>
+                            </div>
+							<div id="viewWidthGroup" class="form-group">
+                                <label for="viewWidth" class="control-label">Width:</label>
+                                <input type="number" class="form-control" id="viewWidth" disabled>
+                            </div>
+							<div id="viewLengthGroup" class="form-group">
+                                <label for="viewLength" class="control-label">Length:</label>
+                                <input type="number" class="form-control" id="viewLength" disabled>
+                            </div>
+							<div id="viewPrintableGroup" class="form-group">
+                                <label for="viewPrintableType" class="control-label">Printable:</label>
+                                <select id="viewPrintableType" class="form-control" disabled>
+									<option value="true">True</option>
+                                    <option value="false">False</option>
+								</select>
+                            </div>
+							<div id="viewRamGroup" class="form-group">
+                                <label for="viewRam" class="control-label">RAM:</label>
+                                <input type="number" class="form-control" id="viewRam" disabled>
+                            </div>
+							<div id="viewStorageGroup" class="form-group">
+                                <label for="viewStorage" class="control-label">Storage:</label>
+                                <input type="number" class="form-control" id="viewStorage" disabled>
+                            </div>
+							<div id="viewOperatingSystemGroup" class="form-group">
+                                <label for="viewOperatingSystem" class="control-label">Operating System:</label>
+                                <input type="text" class="form-control" id="viewOperatingSystem" disabled>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="edit-modal" class="section">
+        <!-- Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Resource</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="editAlert" class="modal-alert alert alert-danger alert-dismissible hidden" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Error!</strong> Please fill in the input(s) in red!
+                        </div>
+                        <form id="editForm">
+                            <div class="form-group">
+                                <label for="editID" class="control-label">Id:</label>
+                                <input type="text" class="form-control" id="editID" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="editType" class="control-label">Type:</label>
+                                <select id="editType" class="form-control" disabled></select>
+                            </div>
+							<div id="editStatusGroup" class="form-group">
+                                <label class="control-label">Availability:</label>
+                                <select class="form-control" id="editStatus">
+                                    <option value="true">Available</option>
+                                    <option value="false">Unavailable</option>
+                                </select>
+                            </div>
+							<div id="editRoomTypeGroup" class="form-group">
+                                <label for="editRoomType" class="control-label">Room Type:</label>
+                                <select id="editRoomType" class="form-control">
+									<option value="conference">Conference</option>
+                                    <option value="meeting">Meeting</option>
+								</select>
+                            </div>
+							<div id="editRoomNumberGroup" class="form-group">
+                                <label for="editRoomNumber" class="control-label">Room Number:</label>
+                                <input type="text" class="form-control" id="editRoomNumber">
+                            </div>
+							<div id="editCapacityGroup" class="form-group">
+                                <label for="editCapacity" class="control-label">Capacity:</label>
+                                <input type="number" class="form-control" id="editCapacity">
+                            </div>
+							<div id="editHeightGroup" class="form-group">
+                                <label for="editHeight" class="control-label">Height:</label>
+                                <input type="number" class="form-control" id="editHeight">
+                            </div>
+							<div id="editWidthGroup" class="form-group">
+                                <label for="editWidth" class="control-label">Width:</label>
+                                <input type="number" class="form-control" id="editWidth">
+                            </div>
+							<div id="editLengthGroup" class="form-group">
+                                <label for="editLength" class="control-label">Length:</label>
+                                <input type="number" class="form-control" id="editLength">
+                            </div>
+							<div id="editPrintableGroup" class="form-group">
+                                <label for="editPrintableType" class="control-label">Printable:</label>
+                                <select id="editPrintableType" class="form-control">
+									<option value="true">True</option>
+                                    <option value="false">False</option>
+								</select>
+                            </div>
+							<div id="editRamGroup" class="form-group">
+                                <label for="editRam" class="control-label">RAM:</label>
+                                <input type="number" class="form-control" id="editRam">
+                            </div>
+							<div id="editStorageGroup" class="form-group">
+                                <label for="editStorage" class="control-label">Storage:</label>
+                                <input type="number" class="form-control" id="editStorage">
+                            </div>
+							<div id="editOperatingSystemGroup" class="form-group">
+                                <label for="editOperatingSystem" class="control-label">Operating System:</label>
+                                <input type="text" class="form-control" id="editOperatingSystem">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="editRecord" type="button" class="btn btn-warning">Edit Resource</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+<script>
+</script>

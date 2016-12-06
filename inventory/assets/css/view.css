@@ -1,0 +1,66 @@
+.details {
+    float: left;
+    margin-right: 50px;
+}
+
+.usage {
+    background-color: red;
+    color: #ffffff;
+    border-radius: 3px;
+    padding: 0px 10px;
+}
+
+.btn {
+    background-color: dodgerblue;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-right: 20px;
+    width: 70px;
+    text-align: center;
+    border: 1px #1B519C solid;
+}
+
+.tblItems {
+    border: 1px dodgerblue solid;
+    border-radius: 3px;
+}
+
+.bordered {
+    border: 1px solid dodgerblue;
+    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 1px dodgerblue;
+}
+table {
+    border-spacing: 0;
+    width: 200px;
+    margin: 30px;
+    border-collapse: inherit;
+}
+
+.bordered th {
+    background-color: dodgerblue;
+    color: #ffffff;
+}
+
+.bordered td, .bordered th {
+    padding: 10px;
+    text-align: left;
+}
+
+h3 {
+    margin-top: 5px;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.inField {
+    width: 200px;
+    height: 34px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 15px;
+}
