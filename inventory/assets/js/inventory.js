@@ -439,6 +439,7 @@ function initTable(getRes) {
 				created.resource.status = "true";
 			else
 				created.resource.status = "false";
+
 			created = JSON.stringify(created);
 			$.ajax({
 					url: '/inventory/' + type + '/' + id, 
@@ -564,7 +565,7 @@ function initTable(getRes) {
 					}
 				});
             }
-        });  
+        });         
     });
 	
 	$('#editType').on('change', function (e) {
