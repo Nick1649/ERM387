@@ -368,17 +368,11 @@ function initTable(getRes) {
 				created.resource.storage = $("#createStorage").val();
 				created.resource.operating_system = $("#createOperatingSystem").val();
 			}
-<<<<<<< f27d878bfc2467972d017203771293ef7adbb8fd
+
 			if($("#newStatus").val() == "Available")
 				created.resource.status = "true";
 			else
 				created.resource.status = "false";
-			created = JSON.stringify(created);
-			$.ajax({
-					url: '/inventory', 
-					headers: {
-						'Content-Type':'application/json'
-=======
 
 			if(type == "Computer" && (created.resource.ram != "" && created.resource.storage != "" && created.resource.operating_system != "" && created.resource.ram != null && created.resource.storage != null && created.resource.operating_system != null) || type == "WhiteBoard" &&(created.resource.isPrintable != "" && created.resource.isPrintable != null)) {
 				created = JSON.stringify(created);
@@ -395,7 +389,6 @@ function initTable(getRes) {
 							location.reload();
 						}
 						console.log(result);
->>>>>>> Validation
 					},
 					error: function(xhr, resp, text) {
 						console.log(xhr, resp, text);
@@ -705,6 +698,7 @@ $(document).ready(function(){
                 // TODO: flash prompt for pass again
             }
         })
+});
 
 function checkIfCurrentlyReserved(reservations) {
 	if (reservations != null && reservations.length > 0) {
