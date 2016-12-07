@@ -9,20 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!--<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">-->
-	<!--<link rel="stylesheet" href="assets/bootstrap-table/css/bootstrap-table.min.css">-->
-    <!--<link rel="stylesheet" href="assets/fonts/ionicons.min.css">-->
-    <!--<link rel="stylesheet" href="assets/css/custom-search-input.css">-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
-    	<script src="assets/js/inventory.js"></script>
-    <!--<script src="assets/js/jquery.min.js"></script>-->
-    <!--<script src="assets/bootstrap/js/bootstrap.min.js"></script>-->
-	<!--<script src="assets/bootstrap-table/js/bootstrap-table.min.js"></script>-->
+    <script src="assets/js/inventory.js"></script>
 
     <style>
         .section {
@@ -138,22 +131,27 @@
 							<div id="createRoomNumberGroup" class="form-group">
                                 <label for="createRoomNumber" class="control-label">Room Number:</label>
                                 <input type="text" class="form-control" id="createRoomNumber">
+                                <span id="createRoomNumberIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createCapacityGroup" class="form-group">
                                 <label for="createCapacity" class="control-label">Capacity:</label>
-                                <input type="number" class="form-control" id="createCapacity">
+                                <input type="text" class="form-control" id="createCapacity">
+                                <span id="createCapacityIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createHeightGroup" class="form-group">
                                 <label for="createHeight" class="control-label">Height:</label>
-                                <input type="number" class="form-control" id="createHeight">
+                                <input type="text" class="form-control" id="createHeight">
+                                <span id="createHeightIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createWidthGroup" class="form-group">
                                 <label for="createWidth" class="control-label">Width:</label>
-                                <input type="number" class="form-control" id="createWidth">
+                                <input type="text" class="form-control" id="createWidth">
+                                <span id="createWidthIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createLengthGroup" class="form-group">
                                 <label for="createLength" class="control-label">Length:</label>
-                                <input type="number" class="form-control" id="createLength">
+                                <input type="text" class="form-control" id="createLength">
+                                <span id="createLengthIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createPrintableGroup" class="form-group">
                                 <label for="createPrintableType" class="control-label">Printable:</label>
@@ -164,15 +162,18 @@
                             </div>
 							<div id="createRamGroup" class="form-group">
                                 <label for="createRam" class="control-label">RAM:</label>
-                                <input type="number" class="form-control" id="createRam">
+                                <input type="text" class="form-control" id="createRam">
+                                <span id="createRamIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createStorageGroup" class="form-group">
                                 <label for="createStorage" class="control-label">Storage:</label>
-                                <input type="number" class="form-control" id="createStorage">
+                                <input type="text" class="form-control" id="createStorage">
+                                <span id="createStorageIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="createOperatingSystemGroup" class="form-group">
                                 <label for="createOperatingSystem" class="control-label">Operating System:</label>
                                 <input type="text" class="form-control" id="createOperatingSystem">
+                                <span id="createOperatingSystemIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
                         </form>
                     </div>
@@ -305,22 +306,27 @@
 							<div id="editRoomNumberGroup" class="form-group">
                                 <label for="editRoomNumber" class="control-label">Room Number:</label>
                                 <input type="text" class="form-control" id="editRoomNumber">
+                                <span id="editRoomNumberIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editCapacityGroup" class="form-group">
                                 <label for="editCapacity" class="control-label">Capacity:</label>
-                                <input type="number" class="form-control" id="editCapacity">
+                                <input type="text" class="form-control" id="editCapacity">
+                                <span id="editCapacityIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editHeightGroup" class="form-group">
                                 <label for="editHeight" class="control-label">Height:</label>
-                                <input type="number" class="form-control" id="editHeight">
+                                <input type="text" class="form-control" id="editHeight">
+                                <span id="editHeightIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editWidthGroup" class="form-group">
                                 <label for="editWidth" class="control-label">Width:</label>
-                                <input type="number" class="form-control" id="editWidth">
+                                <input type="text" class="form-control" id="editWidth">
+                                <span id="editWidthIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editLengthGroup" class="form-group">
                                 <label for="editLength" class="control-label">Length:</label>
-                                <input type="number" class="form-control" id="editLength">
+                                <input type="text" class="form-control" id="editLength">
+                                <span id="editLengthIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editPrintableGroup" class="form-group">
                                 <label for="editPrintableType" class="control-label">Printable:</label>
@@ -331,15 +337,18 @@
                             </div>
 							<div id="editRamGroup" class="form-group">
                                 <label for="editRam" class="control-label">RAM:</label>
-                                <input type="number" class="form-control" id="editRam">
+                                <input type="text" class="form-control" id="editRam">
+                                <span id="editRamIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editStorageGroup" class="form-group">
                                 <label for="editStorage" class="control-label">Storage:</label>
-                                <input type="number" class="form-control" id="editStorage">
+                                <input type="text" class="form-control" id="editStorage">
+                                <span id="editStorageIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
 							<div id="editOperatingSystemGroup" class="form-group">
                                 <label for="editOperatingSystem" class="control-label">Operating System:</label>
                                 <input type="text" class="form-control" id="editOperatingSystem">
+                                <span id="editOperatingSystemIcon" class="glyphicon glyphicon-remove form-control-feedback hidden" aria-hidden="true"></span>
                             </div>
                         </form>
                     </div>
@@ -353,5 +362,3 @@
     </section>
 </body>
 </html>
-<script>
-</script>
