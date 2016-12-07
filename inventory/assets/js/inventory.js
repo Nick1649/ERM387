@@ -508,22 +508,7 @@ function initTable(getRes) {
 
             table.row(row).remove();
             table.row.add(created).draw();
-        });
-
-        // $.ajax({
-        //     url: '/inventory/', 
-        //     type : "DELETE", 
-        //     dataType : 'json', 
-        //     data : ids, 
-        //     success : function(result) {
-                
-        //         // TODO: refresh results? or use javascript to update table?
-        //         console.log(result);
-        //     },
-        //     error: function(xhr, resp, text) {
-        //         console.log(xhr, resp, text);
-        //     }
-        // });        
+        });     
     });
 	
 	$('#editType').on('change', function (e) {
@@ -621,4 +606,37 @@ $(document).ready(function(){
                 // TODO: flash prompt for pass again
             }
         })
+});
+
+	$("#logout").on('click', function(){
+		document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		localStorage.removeItem("userId");
+		localStorage.removeItem("isAdmin");
+   		window.location="/Login.html";
+    });
+	
+	if (localStorage.getItem("userId") === null || localStorage.getItem("isAdmin") === null || localStorage.getItem("isAdmin") === "false") {
+		$("#logout").click();
+	}
+	
+	$.ajax({
+        url: 'inventory', 
+        method : "GET", 
+		crossDomain: true,
+		headers: {
+			"content-type": "application/json"
+		},
+        success : function(result) {
+			if (result.status) {
+				initTable(result.body.resources);
+			}
+            // TODO: redirect to resources
+            console.log(result);
+        },
+        error: function(xhr, resp, text) {
+			//need cookie
+            console.log(xhr, resp, text);
+            // TODO: flash prompt for pass again
+        }
+    });
 });

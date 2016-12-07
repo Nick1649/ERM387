@@ -14,11 +14,11 @@
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header"><a class="navbar-brand navbar-link" href="Resources.html">Inventory</a>
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="/Resources.html">Inventory</a>
                 <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav"></ul><a class="navbar-right navbar-link" href="Login.html">Login</a>
+                <ul class="nav navbar-nav"></ul><a class="navbar-right navbar-link" id="logout" href="/Login.html">Logout</a>
             </div>
         </div>
     </nav>
@@ -27,15 +27,16 @@
             <h1>Profile </h1>
             <div class="input-group">
                 <div class="input-group-addon"><span>Change Password</span></div>
-                <input class="form-control" type="text">
+                <input class="form-control" type="text" id="newPassword">
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
+                    <button class="btn btn-default" type="button" id="submit">Go!</button>
                 </div>
             </div>
         </form>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/profile.js"></script>
 </body>
 
 </html>
